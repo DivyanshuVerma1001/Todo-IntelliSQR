@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams, Navigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, KeyRound } from 'lucide-react';
 import { resetPasswordSchema, ResetPasswordFormData } from '../lib/schemas';
 import { useResetPassword } from '../hooks/useAuth';
 import { useAuthStore } from '../store/authStore';
 import Loader from '../components/Loader';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
 
 const ResetPasswordPage = () => {
   const { token } = useParams<{ token: string }>();
@@ -17,7 +20,7 @@ const ResetPasswordPage = () => {
   const { mutate: resetPassword, isPending } = useResetPassword();
 
   useEffect(() => {
-    document.title = 'Reset Password | Auth App';
+    document.title = 'Reset Password | Todo App';
   }, []);
 
   const {
@@ -44,80 +47,62 @@ const ResetPasswordPage = () => {
   if (showLoader) return <Loader />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FFF8E1] via-[#FFF3E0] to-[#E8F5E9] px-4">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-8 border border-gray-100 animate-fadeIn">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">Reset Password 🔐</h2>
-        <p className="text-gray-600 text-center mb-6">Set a strong new password to secure your account</p>
-
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-            <div className="relative">
-              <input
-                {...register('password')}
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Enter new password"
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent text-gray-700 placeholder-gray-400 ${
-                  errors.password ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-orange-600"
-              >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-            {errors.password && (
-              <span className="text-red-500 text-sm mt-1">{errors.password.message}</span>
-            )}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-md p-8 animate-fadeIn">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
+            <KeyRound className="w-8 h-8 text-blue-400" />
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Confirm New Password
-            </label>
-            <div className="relative">
-              <input
-                {...register('confirmPassword')}
-                type={showConfirmPassword ? 'text' : 'password'}
-                placeholder="Confirm new password"
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent text-gray-700 placeholder-gray-400 ${
-                  errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600"
-              >
-                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-            {errors.confirmPassword && (
-              <span className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</span>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            disabled={isPending}
-            className="w-full py-3 bg-gradient-to-r from-orange-400 via-amber-500 to-orange-400 text-white font-semibold rounded-lg shadow-md hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {isPending ? 'Resetting...' : 'Reset Password'}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <a href="/login" className="text-orange-600 hover:underline text-sm font-medium">
-            Back to Login
-          </a>
+          <h2 className="text-3xl font-bold text-white mb-2">Reset Password</h2>
+          <p className="text-gray-400">Set a strong new password to secure your account</p>
         </div>
-      </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div className="relative">
+            <Input
+              {...register('password')}
+              type={showPassword ? 'text' : 'password'}
+              label="New Password"
+              placeholder="Enter new password"
+              error={errors.password?.message}
+              disabled={isPending}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-[38px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          </div>
+
+          <div className="relative">
+            <Input
+              {...register('confirmPassword')}
+              type={showConfirmPassword ? 'text' : 'password'}
+              label="Confirm New Password"
+              placeholder="Confirm new password"
+              error={errors.confirmPassword?.message}
+              disabled={isPending}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-4 top-[38px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
+              aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+            >
+              {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          </div>
+
+          <Button type="submit" disabled={isPending} className="w-full" size="lg">
+            {isPending ? 'Resetting...' : 'Reset Password'}
+          </Button>
+        </form>
+      </Card>
     </div>
   );
 };
 
 export default ResetPasswordPage;
-

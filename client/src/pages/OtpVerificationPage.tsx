@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import { useOtpVerification } from '../hooks/useAuth';
 import { useAuthStore } from '../store/authStore';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import { Shield, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const OtpVerificationPage = () => {
   const { email, phone } = useParams<{ email: string; phone: string }>();
@@ -11,7 +15,7 @@ const OtpVerificationPage = () => {
   const { mutate: verifyOtp, isPending } = useOtpVerification();
 
   useEffect(() => {
-    document.title = 'OTP Verification | Auth App';
+    document.title = 'OTP Verification | Todo App';
   }, []);
 
   const handleChange = (value: string, index: number) => {
@@ -56,13 +60,18 @@ const OtpVerificationPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600 px-4">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-lg rounded-2xl shadow-2xl p-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-3">OTP Verification</h1>
-        <p className="text-center text-gray-600 mb-6">
-          Enter the 5-digit OTP sent to your registered{' '}
-          <span className="font-semibold text-gray-800">{email || phone}</span>
-        </p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-md p-8 animate-fadeIn">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
+            <Shield className="w-8 h-8 text-blue-400" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">OTP Verification</h1>
+          <p className="text-gray-400">
+            Enter the 5-digit code sent to{' '}
+            <span className="font-semibold text-white">{email || phone}</span>
+          </p>
+        </div>
 
         <form onSubmit={handleOtpVerification} className="space-y-6">
           <div className="flex justify-center gap-3">
@@ -75,37 +84,33 @@ const OtpVerificationPage = () => {
                 value={digit}
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-12 h-12 text-center text-xl font-bold border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="w-14 h-14 text-center text-2xl font-bold bg-gray-800/60 border border-gray-700/50 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
               />
             ))}
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isPending || otp.join('').length !== 5}
-            className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full"
+            size="lg"
           >
             {isPending ? 'Verifying...' : 'Verify OTP'}
-          </button>
+          </Button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Didn't receive the code?{' '}
-          <button
-            type="button"
-            onClick={() => {
-              // Resend OTP functionality can be added here
-              alert('Resend OTP feature coming soon!');
-            }}
-            className="text-orange-500 font-semibold hover:underline"
+        <div className="mt-6 text-center">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-300 transition-colors"
           >
-            Resend OTP
-          </button>
-        </p>
-      </div>
+            <ArrowLeft className="w-4 h-4" />
+            Back to Login
+          </Link>
+        </div>
+      </Card>
     </div>
   );
 };
 
 export default OtpVerificationPage;
-

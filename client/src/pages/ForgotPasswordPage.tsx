@@ -4,10 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router-dom';
 import { forgotPasswordSchema, ForgotPasswordFormData } from '../lib/schemas';
 import { useForgotPassword } from '../hooks/useAuth';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
+import { Mail, ArrowLeft } from 'lucide-react';
 
 const ForgotPasswordPage = () => {
   useEffect(() => {
-    document.title = 'Forgot Password | Auth App';
+    document.title = 'Forgot Password | Todo App';
   }, []);
 
   const { mutate: forgotPassword, isPending } = useForgotPassword();
@@ -25,50 +29,45 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600 px-4">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-lg shadow-2xl rounded-2xl p-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-3">
-          Forgot Password?
-        </h2>
-        <p className="text-center text-gray-600 mb-6">
-          Don't worry, it happens! Enter your email and we'll send you a reset link.
-        </p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-md p-8 animate-fadeIn">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
+            <Mail className="w-8 h-8 text-blue-400" />
+          </div>
+          <h2 className="text-3xl font-bold text-white mb-2">Forgot Password?</h2>
+          <p className="text-gray-400">
+            Don't worry! Enter your email and we'll send you a reset link.
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Email Address</label>
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="Enter your email"
-              className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none text-gray-700 shadow-sm ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              }`}
-            />
-            {errors.email && (
-              <span className="text-red-500 text-sm mt-1">{errors.email.message}</span>
-            )}
-          </div>
-
-          <button
-            type="submit"
+          <Input
+            {...register('email')}
+            type="email"
+            label="Email Address"
+            placeholder="Enter your email"
+            error={errors.email?.message}
             disabled={isPending}
-            className="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-md transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
+          />
+
+          <Button type="submit" disabled={isPending} className="w-full" size="lg">
             {isPending ? 'Sending...' : 'Send Reset Link'}
-          </button>
+          </Button>
         </form>
 
-        <p className="text-center text-gray-600 mt-6">
-          Remembered your password?{' '}
-          <Link to="/login" className="text-orange-500 font-semibold hover:underline">
-            Login
+        <div className="mt-6 text-center">
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-300 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Login
           </Link>
-        </p>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 };
 
 export default ForgotPasswordPage;
-

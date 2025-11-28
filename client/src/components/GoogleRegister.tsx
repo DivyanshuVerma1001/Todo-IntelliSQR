@@ -1,21 +1,25 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useGoogleRegister } from '../hooks/useAuth';
+import Button from './ui/Button';
 
 const GoogleRegister = () => {
   const { mutate: googleRegister } = useGoogleRegister();
 
   const register = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      googleRegister(codeResponse.code);
+      if (codeResponse.code) {
+        googleRegister(codeResponse.code);
+      }
     },
     flow: 'auth-code',
   });
 
   return (
-    <button
+    <Button
       type="button"
       onClick={() => register()}
-      className="w-full py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 bg-white hover:bg-gray-50 transition duration-200 flex items-center justify-center gap-2"
+      variant="secondary"
+      className="w-full flex items-center justify-center gap-2"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
         <path
@@ -36,9 +40,8 @@ const GoogleRegister = () => {
         />
       </svg>
       Sign up with Google
-    </button>
+    </Button>
   );
 };
 
 export default GoogleRegister;
-

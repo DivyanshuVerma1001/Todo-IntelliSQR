@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, UserPlus, Mail, Phone, Lock } from 'lucide-react';
 import { signupSchema, SignupFormData } from '../lib/schemas';
 import { useRegister } from '../hooks/useAuth';
 import { useAuthStore } from '../store/authStore';
 import GoogleRegisterWrapper from '../components/GoogleRegisterWrapper';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
+import Textarea from '../components/ui/Textarea';
 
 const SignupPage = () => {
   useEffect(() => {
-    document.title = 'Signup | Auth App';
+    document.title = 'Signup | Todo App';
   }, []);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -40,144 +44,132 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex py-5 h-screen items-center justify-center bg-gradient-to-br from-orange-200 via-orange-100 to-red-100 px-2">
-      <div className="flex w-full max-w-4xl bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden animate-fadeIn">
-        <div className="hidden md:flex w-1/2 relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
-          <div className="absolute bottom-6 left-6 text-white">
-            <h2 className="text-2xl font-bold drop-shadow-lg">Fresh Meals, Fast Delivery 🍴</h2>
-            <p className="mt-1 text-xs opacity-90">Order your favorites & track them in real time!</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-2xl p-8 animate-fadeIn">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
+            <UserPlus className="w-8 h-8 text-blue-400" />
           </div>
+          <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+          <p className="text-gray-400">Sign up to start managing your todos</p>
         </div>
 
-        <div className="w-full md:w-1/2 p-6 flex flex-col justify-center">
-          <h2 className="text-2xl font-extrabold text-gray-800 mb-1">Create Account</h2>
-          <p className="text-xs text-gray-500 mb-6">Sign up and enjoy quick, delicious meals 🚀</p>
+        <div className="mb-6">
+          <GoogleRegisterWrapper />
+        </div>
 
-          <div className="mb-4">
-            <GoogleRegisterWrapper />
+        <div className="flex items-center my-6">
+          <div className="flex-grow border-t border-gray-700"></div>
+          <span className="px-4 text-sm text-gray-500">or</span>
+          <div className="flex-grow border-t border-gray-700"></div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <Input
+            {...registerForm('name')}
+            label="Full Name"
+            placeholder="Enter your name"
+            error={errors.name?.message}
+            disabled={isPending}
+          />
+
+          <Input
+            {...registerForm('email')}
+            type="email"
+            label="Email"
+            placeholder="example@email.com"
+            error={errors.email?.message}
+            disabled={isPending}
+          />
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
+            <div className="flex">
+              <span className="px-4 py-3 bg-gray-800/60 border border-r-0 border-gray-700/50 rounded-l-2xl text-gray-400 flex items-center">
+                +91
+              </span>
+              <input
+                {...registerForm('phone')}
+                placeholder="9876543210"
+                className="flex-1 px-4 py-3 bg-gray-800/60 backdrop-blur-sm border border-gray-700/50 rounded-r-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+                disabled={isPending}
+              />
+            </div>
+            {errors.phone && <p className="mt-1.5 text-sm text-red-400">{errors.phone.message}</p>}
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
-            <div>
-              <label className="block text-xs font-semibold mb-1">Name</label>
-              <input
-                {...registerForm('name')}
-                placeholder="Enter your name"
-                className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-1 focus:ring-orange-400 focus:outline-none transition-all duration-200 ${
-                  errors.name ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.name && (
-                <span className="text-red-500 text-xs mt-1 block">{errors.name.message}</span>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold mb-1">Email</label>
-              <input
-                {...registerForm('email')}
-                type="email"
-                placeholder="example@email.com"
-                className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-1 focus:ring-orange-400 focus:outline-none transition-all duration-200 ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
-                }`}
-              />
-              {errors.email && (
-                <span className="text-red-500 text-xs mt-1 block">{errors.email.message}</span>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold mb-1">Phone</label>
-              <div className="flex">
-                <span className="px-3 py-2 border rounded-l-lg bg-gray-100 text-gray-600 text-xs">
-                  +91
-                </span>
-                <input
-                  {...registerForm('phone')}
-                  placeholder="9876543210"
-                  className="flex-1 px-3 py-2 border-t border-b border-r rounded-r-lg focus:ring-1 focus:ring-orange-400 focus:outline-none transition-all duration-200 text-sm"
-                />
-              </div>
-              {errors.phone && (
-                <span className="text-red-500 text-xs mt-1 block">{errors.phone.message}</span>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold mb-1">Password</label>
-              <div className="relative">
-                <input
-                  {...registerForm('password')}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
-                  className={`w-full px-3 py-2 border rounded-lg shadow-sm focus:ring-1 focus:ring-orange-400 focus:outline-none transition-all duration-200 ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              {errors.password && (
-                <span className="text-red-500 text-xs mt-1 block">{errors.password.message}</span>
-              )}
-            </div>
-
-            <div>
-              <p className="text-xs font-semibold mb-1">Verification Method</p>
-              <div className="flex gap-4">
-                <label className="flex items-center gap-1 cursor-pointer text-xs">
-                  <input
-                    type="radio"
-                    value="email"
-                    {...registerForm('verificationMethod')}
-                    className="accent-orange-500"
-                  />
-                  <span>Email</span>
-                </label>
-                <label className="flex items-center gap-1 cursor-pointer text-xs">
-                  <input
-                    type="radio"
-                    value="phone"
-                    {...registerForm('verificationMethod')}
-                    className="accent-orange-500"
-                  />
-                  <span>Phone</span>
-                </label>
-              </div>
-            </div>
-
-            <button
-              type="submit"
+          <div className="relative">
+            <Input
+              {...registerForm('password')}
+              type={showPassword ? 'text' : 'password'}
+              label="Password"
+              placeholder="••••••••"
+              error={errors.password?.message}
               disabled={isPending}
-              className={`w-full py-2 rounded-lg text-white font-semibold text-sm bg-gradient-to-r from-orange-500 to-red-500 shadow hover:shadow-md hover:scale-[1.02] transition-transform duration-200 ${
-                isPending ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-[38px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
-              {isPending ? 'Signing up...' : 'Sign Up'}
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
-          </form>
+          </div>
 
-          <p className="text-center text-xs mt-4">
-            Already have an account?{' '}
-            <Link
-              to="/login"
-              className="text-orange-600 font-semibold hover:underline hover:text-red-500 transition"
-            >
-              Login
-            </Link>
-          </p>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-3">
+              Verification Method
+            </label>
+            <div className="flex gap-4">
+              <label className="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  value="email"
+                  {...registerForm('verificationMethod')}
+                  className="sr-only peer"
+                />
+                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all hover:border-gray-600">
+                  <div className="flex items-center gap-3">
+                    <Mail className="w-5 h-5 text-gray-400 peer-checked:text-blue-400" />
+                    <span className="text-white font-medium">Email</span>
+                  </div>
+                </div>
+              </label>
+              <label className="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  value="phone"
+                  {...registerForm('verificationMethod')}
+                  className="sr-only peer"
+                />
+                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all hover:border-gray-600">
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-gray-400 peer-checked:text-blue-400" />
+                    <span className="text-white font-medium">Phone</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <Button type="submit" disabled={isPending} className="w-full" size="lg">
+            {isPending ? 'Creating Account...' : 'Create Account'}
+          </Button>
+        </form>
+
+        <div className="mt-6 text-center text-sm">
+          <span className="text-gray-400">Already have an account? </span>
+          <Link
+            to="/login"
+            className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+          >
+            Log in
+          </Link>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
 
 export default SignupPage;
-

@@ -1,5 +1,6 @@
 import { useGoogleLogin as useGoogleOAuthLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '../hooks/useAuth';
+import Button from './ui/Button';
 
 const GoogleLogin = () => {
   const { mutate: googleLogin } = useGoogleLogin();
@@ -14,10 +15,11 @@ const GoogleLogin = () => {
   });
 
   return (
-    <button
+    <Button
       type="button"
       onClick={() => login()}
-      className="w-full py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 bg-white hover:bg-gray-50 transition duration-200 flex items-center justify-center gap-2"
+      variant="secondary"
+      className="w-full flex items-center justify-center gap-2"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
         <path
@@ -38,9 +40,8 @@ const GoogleLogin = () => {
         />
       </svg>
       Sign in with Google
-    </button>
+    </Button>
   );
 };
 
 export default GoogleLogin;
-

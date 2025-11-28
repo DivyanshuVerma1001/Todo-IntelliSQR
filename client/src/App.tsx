@@ -12,13 +12,15 @@ import OtpVerificationPage from './pages/OtpVerificationPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import HomePage from './pages/HomePage';
-
+import TodosPage from './pages/TodosPage';
 function App() {
   const { isLoading, isAuthenticated } = useAuthStore();
   useCheckAuth();
 
   useEffect(() => {
-    document.title = 'Auth App - TypeScript';
+    document.title = 'Todo App - TypeScript';
+    // Always apply dark mode
+    document.documentElement.classList.add('dark');
   }, []);
 
   if (isLoading) {
@@ -30,6 +32,22 @@ function App() {
       <Routes>
         <Route
           path="/"
+          element={
+            <ProtectedRoute>
+              <TodosPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/todos"
+          element={
+            <ProtectedRoute>
+              <TodosPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home"
           element={
             <ProtectedRoute>
               <HomePage />

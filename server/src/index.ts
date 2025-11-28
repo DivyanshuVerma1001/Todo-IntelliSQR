@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/userAuthRoutes';
+import todoRouter from './routes/todoRoutes';
 import { DBconnect } from './database/dbConnection';
 
 const app = express();
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', authRouter);
+app.use('/api/todos', todoRouter);
 
 const port = process.env.PORT || 3000;
 
