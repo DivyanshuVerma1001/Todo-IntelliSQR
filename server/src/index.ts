@@ -4,9 +4,9 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRouter from './routes/userAuthRoutes';
-import todoRouter from './routes/todoRoutes';
-import { DBconnect } from './database/dbConnection';
+import authRouter from './routes/userAuthRoutes.js';
+import todoRouter from './routes/todoRoutes.js';
+import { DBconnect } from './database/dbConnection.js';
 
 const app = express();
 const allowedOrigins = ['http://localhost:5173'];

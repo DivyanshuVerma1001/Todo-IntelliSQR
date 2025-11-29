@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Todo, ITodo } from '../model/todo';
-import { AuthRequest } from '../middleware/userMiddleware';
+import { Todo, ITodo } from '../model/todo.js';
+import { AuthRequest } from '../middleware/userMiddleware.js';
 
 interface CreateTodoBody {
   title: string;

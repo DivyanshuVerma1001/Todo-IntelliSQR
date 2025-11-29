@@ -6,9 +6,9 @@ import {
   logout,
   forgotPassword,
   resetPassword,
-} from '../controller/userAuth';
-import { googleLogin, googleRegister } from '../controller/userGoogleAuth';
-import { userMiddleware, AuthRequest } from '../middleware/userMiddleware';
+} from '../controller/userAuth.js';
+import { googleLogin, googleRegister } from '../controller/userGoogleAuth.js';
+import { userMiddleware, AuthRequest } from '../middleware/userMiddleware.js';
 
 const authRouter = express.Router();
 

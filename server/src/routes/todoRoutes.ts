@@ -6,8 +6,8 @@ import {
   updateTodo,
   deleteTodo,
   toggleTodo,
-} from '../controller/todoController';
-import { userMiddleware } from '../middleware/userMiddleware';
+} from '../controller/todoController.js';
+import { userMiddleware } from '../middleware/userMiddleware.js';
 
 const todoRouter = express.Router();
 

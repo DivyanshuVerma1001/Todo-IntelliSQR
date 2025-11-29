@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { User } from '../model/user';
-import { oauth2client } from '../utils/googleConfig';
+import { User } from '../model/user.js';
+import { oauth2client } from '../utils/googleConfig.js';
 
 export const googleLogin = async (req: Request, res: Response): Promise<void> => {
   try {
