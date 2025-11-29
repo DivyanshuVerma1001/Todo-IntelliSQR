@@ -14,16 +14,17 @@
     "@react-oauth/google": "^0.12.2",
     "@tanstack/react-query": "^5.28.0",
     "axios": "^1.7.2",
+    "clsx": "^2.1.0",
+    "framer-motion": "^12.23.24",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
     "react-router-dom": "^6.22.0",
     "react-toastify": "^10.0.4",
+    "tailwind-merge": "^2.2.0",
     "zod": "^3.22.4",
-    "zustand": "^4.5.0",
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.2.0"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
@@ -42,4 +43,3 @@
     "vite": "^5.1.0"
   }
 }
-

@@ -40,11 +40,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
-      <Card variant="glass" className="w-full max-w-md p-8 animate-fadeIn">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
-            <LogIn className="w-8 h-8 text-blue-400" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600/10 border border-blue-600/20 mb-4">
+            <LogIn className="w-8 h-8 text-blue-500" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
           <p className="text-gray-400">Log in to your account to continue</p>

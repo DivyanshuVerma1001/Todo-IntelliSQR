@@ -37,8 +37,8 @@ const TodoList = () => {
   if (todos.length === 0) {
     return (
       <Card variant="glass" className="p-12 text-center">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-6">
-          <Sparkles className="w-10 h-10 text-blue-400" />
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-blue-600/10 border border-blue-600/20 mb-6">
+          <Sparkles className="w-10 h-10 text-blue-500" />
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">No todos yet</h3>
         <p className="text-gray-400 text-lg">Create your first todo to get started!</p>
@@ -51,8 +51,8 @@ const TodoList = () => {
       {incompleteTodos.length > 0 && (
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-xl bg-blue-500/20">
-              <Circle className="w-5 h-5 text-blue-400" />
+            <div className="p-2 rounded-2xl bg-blue-600/10 border border-blue-600/20">
+              <Circle className="w-5 h-5 text-blue-500" />
             </div>
             <h2 className="text-xl font-bold text-white">
               Active Tasks <span className="text-gray-400 font-normal">({incompleteTodos.length})</span>
@@ -71,8 +71,8 @@ const TodoList = () => {
       {completedTodos.length > 0 && (
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-xl bg-green-500/20">
-              <CheckCircle2 className="w-5 h-5 text-green-400" />
+            <div className="p-2 rounded-2xl bg-green-600/10 border border-green-600/20">
+              <CheckCircle2 className="w-5 h-5 text-green-500" />
             </div>
             <h2 className="text-xl font-bold text-white">
               Completed <span className="text-gray-400 font-normal">({completedTodos.length})</span>

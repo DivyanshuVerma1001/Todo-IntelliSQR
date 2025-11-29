@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Check, Trash2, Edit2, Save, X, Clock } from 'lucide-react';
 import { Todo } from '../types/todo';
 import { useDeleteTodo, useToggleTodo, useUpdateTodo } from '../hooks/useTodos';
@@ -84,12 +85,16 @@ const TodoItem = ({ todo }: TodoItemProps) => {
 
   return (
     <>
-      <Card
-        variant="glass"
-        className={`p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
-          todo.completed ? 'opacity-75' : ''
-        }`}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.2 }}
       >
+        <Card
+          variant="glass"
+          className={`p-5 ${todo.completed ? 'opacity-75' : ''}`}
+        >
         {isEditing ? (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input
@@ -117,20 +122,22 @@ const TodoItem = ({ todo }: TodoItemProps) => {
           </form>
         ) : (
           <div className="flex items-start gap-4">
-            <button
+            <motion.button
               onClick={handleToggle}
               disabled={isToggling}
-              className={`mt-1 flex-shrink-0 w-6 h-6 rounded-xl border-2 flex items-center justify-center transition-all duration-300 ${
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className={`mt-1 flex-shrink-0 w-6 h-6 rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
                 todo.completed
-                  ? 'bg-gradient-to-r from-green-500 to-emerald-500 border-green-500 shadow-lg shadow-green-500/30 scale-110'
-                  : 'border-gray-600 hover:border-green-500 hover:scale-110'
+                  ? 'bg-green-600 border-green-600 shadow-md'
+                  : 'border-gray-600 hover:border-green-500'
               } disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-green-500/50`}
               aria-label={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
             >
               {todo.completed && (
-                <Check className="w-4 h-4 text-white animate-scaleIn" strokeWidth={3} />
+                <Check className="w-4 h-4 text-white" strokeWidth={3} />
               )}
-            </button>
+            </motion.button>
 
             <div className="flex-1 min-w-0">
               <h3
@@ -156,27 +163,32 @@ const TodoItem = ({ todo }: TodoItemProps) => {
             </div>
 
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <button
+              <motion.button
                 onClick={handleEdit}
-                className="p-2 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 hover:text-blue-300 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 rounded-2xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-600/20 text-blue-500 hover:text-blue-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 title="Edit todo"
                 aria-label="Edit todo"
               >
                 <Edit2 className="w-4 h-4" />
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={() => setShowDeleteModal(true)}
                 disabled={isDeleting}
-                className="p-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 transition-all duration-200 hover:scale-110 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 rounded-2xl bg-red-600/10 hover:bg-red-600/20 border border-red-600/20 text-red-500 hover:text-red-400 transition-all duration-200 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-red-500/50"
                 title="Delete todo"
                 aria-label="Delete todo"
               >
                 <Trash2 className="w-4 h-4" />
-              </button>
+              </motion.button>
             </div>
           </div>
         )}
-      </Card>
+        </Card>
+      </motion.div>
 
       <Modal
         isOpen={showDeleteModal}

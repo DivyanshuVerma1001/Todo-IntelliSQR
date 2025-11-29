@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,13 +16,13 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'font-semibold rounded-2xl transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900';
+    'font-semibold rounded-2xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl',
-    secondary: 'bg-gray-700 hover:bg-gray-600 text-white shadow-md hover:shadow-lg',
-    danger: 'bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl',
-    ghost: 'bg-transparent hover:bg-gray-800 text-gray-300 hover:text-white',
+    primary: 'bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg',
+    secondary: 'bg-gray-700 hover:bg-gray-600 text-white border border-gray-600 shadow-sm hover:shadow-md',
+    danger: 'bg-red-600 hover:bg-red-700 text-white shadow-md hover:shadow-lg',
+    ghost: 'bg-transparent hover:bg-gray-800/50 text-gray-300 hover:text-white',
   };
 
   const sizes = {
@@ -31,12 +32,14 @@ const Button = ({
   };
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 

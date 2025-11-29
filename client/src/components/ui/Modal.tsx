@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import Card from './Card';
@@ -36,18 +37,27 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
-      onClick={onClose}
-    >
-      <Card
-        variant="glass"
-        className="w-full max-w-md p-6 animate-scaleIn"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Card
+              variant="glass"
+              className="w-full max-w-md p-6"
+            >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-white">{title}</h2>
           <button
@@ -69,7 +79,10 @@ const Modal = ({
           )}
         </div>
       </Card>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

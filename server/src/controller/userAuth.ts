@@ -322,12 +322,13 @@ export const forgotPassword = async (
     await user.save({ validateBeforeSave: false });
 
     const resetPasswordUrl = `${process.env.FRONTEND_URL}/resetPassword/${resetTokenRaw}`;
-    const message = `Your Reset Password Token is:- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then please ignore it.`;
+    const message = generateForgotPasswordEmail(resetPasswordUrl)
+    // const message = `Your Reset Password Token is:- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then please ignore it.`;
 
     try {
       await sendEmailR({
         email: user.email,
-        subject: 'MERN AUTHENTICATION APP RESET PASSWORD',
+        subject: 'TODO APP RESET PASSWORD',
         message,
       });
       res.status(200).json({

@@ -44,11 +44,11 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 px-4 py-12">
-      <Card variant="glass" className="w-full max-w-2xl p-8 animate-fadeIn">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
+      <Card variant="glass" className="w-full max-w-2xl p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4">
-            <UserPlus className="w-8 h-8 text-blue-400" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600/10 border border-blue-600/20 mb-4">
+            <UserPlus className="w-8 h-8 text-blue-500" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
           <p className="text-gray-400">Sign up to start managing your todos</p>
@@ -129,9 +129,9 @@ const SignupPage = () => {
                   {...registerForm('verificationMethod')}
                   className="sr-only peer"
                 />
-                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all hover:border-gray-600">
+                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 transition-all hover:border-gray-600">
                   <div className="flex items-center gap-3">
-                    <Mail className="w-5 h-5 text-gray-400 peer-checked:text-blue-400" />
+                    <Mail className="w-5 h-5 text-gray-400 peer-checked:text-blue-500" />
                     <span className="text-white font-medium">Email</span>
                   </div>
                 </div>
@@ -143,9 +143,9 @@ const SignupPage = () => {
                   {...registerForm('verificationMethod')}
                   className="sr-only peer"
                 />
-                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 transition-all hover:border-gray-600">
+                <div className="p-4 rounded-2xl border-2 border-gray-700 peer-checked:border-blue-600 peer-checked:bg-blue-600/10 transition-all hover:border-gray-600">
                   <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-gray-400 peer-checked:text-blue-400" />
+                    <Phone className="w-5 h-5 text-gray-400 peer-checked:text-blue-500" />
                     <span className="text-white font-medium">Phone</span>
                   </div>
                 </div>

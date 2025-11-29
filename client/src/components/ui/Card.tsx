@@ -10,8 +10,8 @@ const Card = ({ children, variant = 'default', className, ...props }: CardProps)
   const baseStyles = 'rounded-2xl transition-all duration-200';
   
   const variants = {
-    default: 'bg-gray-800 border border-gray-700 shadow-xl',
-    glass: 'bg-gray-800/60 backdrop-blur-xl border border-gray-700/50 shadow-2xl',
+    default: 'bg-gray-800 border border-gray-700/50 shadow-lg',
+    glass: 'bg-gray-800/40 backdrop-blur-md border border-gray-700/30 shadow-lg',
   };
 
   return (
