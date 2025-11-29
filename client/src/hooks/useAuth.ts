@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { apiClient } from '../lib/apiClient';
 import { useAuthStore } from '../store/authStore';
-import { AuthResponse, ApiError } from '../types/auth';
+import { AuthResponse } from '../types/auth';
 import {
   LoginFormData,
   SignupFormData,
@@ -42,7 +42,6 @@ export const useCheckAuth = () => {
 // Register mutation
 export const useRegister = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (data: SignupFormData) => {

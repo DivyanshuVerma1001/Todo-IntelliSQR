@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { Plus, X, Check, Sparkles } from 'lucide-react';
+import { Plus, X, Sparkles } from 'lucide-react';
 import { createTodoSchema, CreateTodoFormData } from '../lib/todoSchemas';
 import { useCreateTodo } from '../hooks/useTodos';
 import Card from './ui/Card';

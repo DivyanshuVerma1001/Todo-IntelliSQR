@@ -1,7 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { cn } from '../../lib/utils';
 import Card from './Card';
 import Button from './Button';
 

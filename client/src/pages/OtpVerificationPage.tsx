@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 const OtpVerificationPage = () => {
   const { email, phone } = useParams<{ email: string; phone: string }>();
   const [otp, setOtp] = useState(['', '', '', '', '']);
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuthStore();
   const { mutate: verifyOtp, isPending } = useOtpVerification();
 

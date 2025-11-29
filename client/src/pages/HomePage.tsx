@@ -4,7 +4,6 @@ import { useAuthStore } from '../store/authStore';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
 
   useEffect(() => {
     // Redirect to todos page
