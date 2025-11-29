@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import { User, IUser } from '../model/user.js';
 import { generateVerificationCode } from '../utils/verificationCodeGenerator.js';
 import { generateEmailTemplate } from '../utils/emailTemplate.js';
+import {generateForgotPasswordEmail} from '../utils/generateForgotPasswordEmail.js'
 import { generateResetPasswordToken } from '../utils/generateResetToken.js';
 import { sendEmailR } from '../utils/resendEmail.js';
 import twilio from 'twilio';

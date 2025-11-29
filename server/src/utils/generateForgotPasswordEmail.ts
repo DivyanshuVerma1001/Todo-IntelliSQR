@@ -1,4 +1,4 @@
-const generateForgotPasswordEmail = (resetUrl: string) => {
+export const generateForgotPasswordEmail = (resetUrl: string) => {
   return `
     <div style="
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -86,5 +86,3 @@ const generateForgotPasswordEmail = (resetUrl: string) => {
     </div>
   `;
 };
-
-module.exports = generateForgotPasswordEmail;
