@@ -5,7 +5,6 @@ import { useAuthStore } from '../store/authStore';
 import { useTodos } from '../hooks/useTodos';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
-import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import { LogOut, Plus, CheckCircle2, Circle, User, UserCircle, ChevronDown, Sparkles, FileText } from 'lucide-react';
 

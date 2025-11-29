@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { useOtpVerification } from '../hooks/useAuth';
 import { useAuthStore } from '../store/authStore';
 import Card from '../components/ui/Card';

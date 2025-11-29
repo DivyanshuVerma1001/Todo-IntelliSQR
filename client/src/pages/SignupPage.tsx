@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, UserPlus, Mail, Phone, Lock } from 'lucide-react';
+import { Eye, EyeOff, UserPlus, Mail, Phone } from 'lucide-react';
 import { signupSchema, SignupFormData } from '../lib/schemas';
 import { useRegister } from '../hooks/useAuth';
 import { useAuthStore } from '../store/authStore';
@@ -10,7 +10,6 @@ import GoogleRegisterWrapper from '../components/GoogleRegisterWrapper';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
-import Textarea from '../components/ui/Textarea';
 
 const SignupPage = () => {
   useEffect(() => {
