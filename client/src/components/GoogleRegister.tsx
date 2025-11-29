@@ -3,13 +3,18 @@ import { useGoogleRegister } from '../hooks/useAuth';
 import Button from './ui/Button';
 
 const GoogleRegister = () => {
-  const { mutate: googleRegister } = useGoogleRegister();
+  const { mutate: googleRegister, isPending } = useGoogleRegister();
 
   const register = useGoogleLogin({
     onSuccess: (codeResponse) => {
       if (codeResponse.code) {
         googleRegister(codeResponse.code);
+      } else {
+        console.error('No authorization code received from Google');
       }
+    },
+    onError: (error) => {
+      console.error('Google register error:', error);
     },
     flow: 'auth-code',
   });
@@ -19,6 +24,7 @@ const GoogleRegister = () => {
       type="button"
       onClick={() => register()}
       variant="secondary"
+      disabled={isPending}
       className="w-full flex items-center justify-center gap-2"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">

@@ -3,13 +3,18 @@ import { useGoogleLogin } from '../hooks/useAuth';
 import Button from './ui/Button';
 
 const GoogleLogin = () => {
-  const { mutate: googleLogin } = useGoogleLogin();
+  const { mutate: googleLogin, isPending } = useGoogleLogin();
 
   const login = useGoogleOAuthLogin({
     onSuccess: (codeResponse) => {
       if (codeResponse.code) {
         googleLogin(codeResponse.code);
+      } else {
+        console.error('No authorization code received from Google');
       }
+    },
+    onError: (error) => {
+      console.error('Google login error:', error);
     },
     flow: 'auth-code',
   });
@@ -19,6 +24,7 @@ const GoogleLogin = () => {
       type="button"
       onClick={() => login()}
       variant="secondary"
+      disabled={isPending}
       className="w-full flex items-center justify-center gap-2"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">
