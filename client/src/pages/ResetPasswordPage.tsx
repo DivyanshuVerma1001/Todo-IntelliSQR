@@ -21,7 +21,10 @@ const ResetPasswordPage = () => {
 
   useEffect(() => {
     document.title = 'Reset Password | Todo App';
-  }, []);
+    if (!token) {
+      console.error('Reset token is missing from URL');
+    }
+  }, [token]);
 
   const {
     register,
@@ -45,6 +48,23 @@ const ResetPasswordPage = () => {
 
   if (isAuthenticated) return <Navigate to="/" replace />;
   if (showLoader) return <Loader />;
+
+  if (!token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
+        <Card variant="glass" className="w-full max-w-md p-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-600/10 border border-red-600/20 mb-4">
+            <KeyRound className="w-8 h-8 text-red-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">Invalid Reset Link</h2>
+          <p className="text-gray-400 mb-4">The reset password link is invalid or has expired.</p>
+          <Button onClick={() => window.location.href = '/forgotPassword'} className="w-full">
+            Request New Reset Link
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
