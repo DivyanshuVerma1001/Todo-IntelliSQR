@@ -40,27 +40,27 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-12">
-      <Card variant="glass" className="w-full max-w-md p-8">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600/10 border border-blue-600/20 mb-4">
-            <LogIn className="w-8 h-8 text-blue-500" />
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-4">
+      <Card variant="glass" className="w-full max-w-md p-5">
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-600/20 mb-2">
+            <LogIn className="w-6 h-6 text-blue-500" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-          <p className="text-gray-400">Log in to your account to continue</p>
+          <h2 className="text-2xl font-bold text-white mb-1">Welcome Back</h2>
+          <p className="text-sm text-gray-400">Log in to your account</p>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-3">
           <GoogleLoginWrapper />
         </div>
 
-        <div className="flex items-center my-6">
+        <div className="flex items-center my-3">
           <div className="flex-grow border-t border-gray-700"></div>
-          <span className="px-4 text-sm text-gray-500">or</span>
+          <span className="px-3 text-xs text-gray-500">or</span>
           <div className="flex-grow border-t border-gray-700"></div>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <Input
             {...register('email')}
             type="email"
@@ -82,28 +82,28 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-[38px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
+              className="absolute right-3 top-[30px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           </div>
 
           <div className="text-right">
             <Link
               to="/forgotPassword"
-              className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
             >
               Forgot password?
             </Link>
           </div>
 
-          <Button type="submit" disabled={isPending} className="w-full" size="lg">
+          <Button type="submit" disabled={isPending} className="w-full" size="md">
             {isPending ? 'Logging in...' : 'Log In'}
           </Button>
         </form>
 
-        <div className="mt-6 text-center text-sm">
+        <div className="mt-4 text-center text-xs">
           <span className="text-gray-400">Don't have an account? </span>
           <Link
             to="/signup"

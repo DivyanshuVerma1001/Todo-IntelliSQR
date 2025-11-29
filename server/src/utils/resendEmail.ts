@@ -18,7 +18,7 @@ export const sendEmailR = async ({ email, subject, message }: SendEmailParams): 
   try {
     const resend = getResendInstance();
     await resend.emails.send({
-      from: 'Tastify <noreply@divyanshu-verma.me>',
+      from: 'Todo <noreply@divyanshu-verma.me>',
       to: [email],
       subject,
       html: message,
