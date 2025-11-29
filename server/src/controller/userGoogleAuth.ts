@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
+import { google } from 'googleapis';
 import { User } from '../model/user.js';
-import { oauth2client } from '../utils/googleConfig.js';
 
 export const googleLogin = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -16,7 +16,16 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'postmessage';
+
+    if (!clientId || !clientSecret) {
+      console.error('Google OAuth config missing:', {
+        hasClientId: !!clientId,
+        hasClientSecret: !!clientSecret,
+        redirectUri,
+      });
       res.status(500).json({
         message: 'Google OAuth configuration is missing',
         error: 'Server configuration error',
@@ -24,8 +33,18 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const googleRes = await oauth2client.getToken(code);
-    oauth2client.setCredentials(googleRes.tokens);
+    // Create OAuth2Client instance with client ID to ensure it's included in the request
+    const oauth2Client = new google.auth.OAuth2(
+      clientId,
+      clientSecret,
+      redirectUri
+    );
+    
+    const googleRes = await oauth2Client.getToken({
+      code,
+      redirect_uri: redirectUri,
+    });
+    oauth2Client.setCredentials(googleRes.tokens);
 
     if (!googleRes.tokens.access_token) {
       res.status(400).json({
@@ -36,7 +55,12 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
     }
 
     const userRes = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${googleRes.tokens.access_token}`,
+        },
+      }
     );
 
     const { email, name } = userRes.data;
@@ -113,7 +137,16 @@ export const googleRegister = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'postmessage';
+
+    if (!clientId || !clientSecret) {
+      console.error('Google OAuth config missing:', {
+        hasClientId: !!clientId,
+        hasClientSecret: !!clientSecret,
+        redirectUri,
+      });
       res.status(500).json({
         message: 'Google OAuth configuration is missing',
         error: 'Server configuration error',
@@ -121,8 +154,18 @@ export const googleRegister = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    const googleRes = await oauth2client.getToken(code);
-    oauth2client.setCredentials(googleRes.tokens);
+    // Create OAuth2Client instance with client ID to ensure it's included in the request
+    const oauth2Client = new google.auth.OAuth2(
+      clientId,
+      clientSecret,
+      redirectUri
+    );
+    
+    const googleRes = await oauth2Client.getToken({
+      code,
+      redirect_uri: redirectUri,
+    });
+    oauth2Client.setCredentials(googleRes.tokens);
 
     if (!googleRes.tokens.access_token) {
       res.status(400).json({
@@ -133,7 +176,12 @@ export const googleRegister = async (req: Request, res: Response): Promise<void>
     }
 
     const userRes = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${googleRes.tokens.access_token}`,
+        },
+      }
     );
 
     const { email, name } = userRes.data;

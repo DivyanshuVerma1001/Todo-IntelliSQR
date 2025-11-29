@@ -13,8 +13,9 @@ const GoogleLogin = () => {
         console.error('No authorization code received from Google');
       }
     },
-    onError: (error) => {
-      console.error('Google login error:', error);
+    onError: (error: any) => {
+      console.error('Google OAuth error:', error);
+      // Don't show toast here, let the backend error handling show it
     },
     flow: 'auth-code',
   });
