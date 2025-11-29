@@ -82,7 +82,7 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-[30px] text-gray-500 hover:text-gray-300 transition-colors focus:outline-none"
+              className="absolute right-3 top-[calc(1.25rem+0.375rem+1.125rem)] -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors focus:outline-none flex items-center justify-center"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
